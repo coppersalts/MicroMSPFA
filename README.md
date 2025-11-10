@@ -1,5 +1,5 @@
 # MicroMSPA
-MicroMSPA is a lightweight tool for making MSPA-styled stories to be read offline without a local HTTP server. It was created specifically for camp entries in [Camp [Aspect]](https://campaspect.miraheze.org/wiki/Main_Page).
+MicroMSPA is a lightweight tool for making MSPA-styled comics to be read offline without a local HTTP server. It was created specifically for camp entries in [Camp [Aspect]](https://campaspect.miraheze.org/wiki/Main_Page).
 
 ## Viewing
 To view a MicroMSPA, simply open the HTML file in your web browser of choice.
