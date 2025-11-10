@@ -1,6 +1,7 @@
-const predefinedColors = {
+const predefinedStyles = {
 	'AA': '#0000FF', // The key values can be any string and are not limited to two characters.
 	'BB': '#008800',
+	'CC': {color: '#CC8800', fontFamily: 'Times New Roman'},
 };
 const pages = [
 	{
@@ -16,6 +17,7 @@ const pages = [
 				text:
 					color('AA', "Text can be colored using predefined colors with short names.") + '<br>' +
 					specificColor('#0055AC', "One off colors can be specified with an exact hex code or other valid CSS color.") + '<br>' +
+					color('CC', "Custom fonts can also be predefined") + '<br>' +
 				'',
 			},
 		],
@@ -66,11 +68,24 @@ const pages = [
 
 // Page markup utilities
 function color(textColorKey, text) {
-	return specificColor(predefinedColors[textColorKey], text);
+	switch (typeof predefinedStyles[textColorKey]) {
+		case 'string':
+			return specificColor(predefinedStyles[textColorKey], text);
+		case 'object':
+			return styleText(predefinedStyles[textColorKey], text);
+	}
 }
 
 function specificColor(textColor, text) {
 	return `<span style="color:${ textColor }">${ text }</span>`;
+}
+
+function styleText(styles, text) {
+	let css = '';
+	for (const key in styles) {
+		css += camelCaseToKebabCase(key) + ':' + styles[key] + ';';
+	}
+	return `<span style="${ css }">${ text }</span>`;
 }
 
 function htmlEscape(str) {
@@ -79,4 +94,10 @@ function htmlEscape(str) {
 		.replace(/>/g, '&gt;')
 		.replace(/"/g, '&quot;')
 		.replace(/'/g, '&#39;');
+}
+
+// Helper functions used in page markup utilities
+
+function camelCaseToKebabCase(str) {
+	return str.replaceAll(/([A-Z])/g, function(match) { return '-' + match.toLowerCase(); });
 }
