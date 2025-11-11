@@ -6,15 +6,21 @@
 		<script>
 		</script>
 		<script src="data/pages.js"></script>
+		<style id="theme"></style>
 		<script>
 			let currentPage = 0;
+			let currentTheme = '';
+			preprocessPages();
+			updatePageToFragment();
+			setTheme(pages[currentPage].theme);
 
 			addEventListener('load', (event) => {
-				updatePageToFragment();
+				displayPage();
 			});
 
 			addEventListener('hashchange', (event) => {
 				updatePageToFragment();
+				displayPage();
 			});
 			addEventListener('keydown', (event) => {
 				if (event.repeat) return;
@@ -39,10 +45,10 @@
 			function updatePageToFragment() {
 				const jumpToPage = parseInt(window.location.hash.substring(2));
 				currentPage = (isNaN(jumpToPage) ? 0 : jumpToPage - 1);
-				displayPage();
 			}
 
 			function displayPage() {
+				setTheme(pages[currentPage].theme);
 				window.scrollTo(0, 0);
 				document.querySelector('.mediaContent .pageTitle').innerHTML = htmlEscape(pages[currentPage].title)
 
@@ -138,6 +144,28 @@
 				window.location.hash = 'p' + (currentPage + 1);
 			}
 
+			function preprocessPages() {
+				let runningTheme = 'default';
+				for (let i = 0; i < pages.length; i++) {
+					if (pages[i].themeChange) {
+						runningTheme = pages[i].themeChange;
+					}
+					pages[i].theme = runningTheme;
+				}
+			}
+
+			function setTheme(newTheme) {
+				if (newTheme === currentTheme) return;
+				currentTheme = newTheme;
+
+				let themeStyles = ':root{';
+				for (const key in themes.default) {
+					themeStyles += `--theme-${ camelCaseToKebabCase(key) }:${ themes[currentTheme][key] ?? themes.default[key] };`;
+				}
+				themeStyles += '}';
+				document.head.querySelector('#theme').innerHTML = themeStyles;
+			}
+
 			// Called from events
 			function setLogButtonText(button, showText, hideText) {
 				button.innerHTML = button.parentElement.open ? hideText : showText;
@@ -170,7 +198,7 @@
 				font-size: 14px;
 				font-weight: bolder;
 				overflow-wrap: break-word;
-				background: #535353;
+				background: var(--theme-bg-1);
 				margin: 0;
 				padding: 0;
 				display: flex;
@@ -180,7 +208,7 @@
 				overflow-x: hidden;
 			}
 			.pageFrame {
-				background: #C6C6C6;
+				background: var(--theme-bg-2);
 				width: 950px;
 				/* padding-top: 7px; */
 				padding-top: 23px;
@@ -192,7 +220,7 @@
 				justify-content: center;
 			}
 			.pageContent {
-				background: #EEE;
+				background: var(--theme-bg-3);
 				width: 650px;
 				display: flex;
 				flex: 0 1 auto;
@@ -256,10 +284,10 @@
 				font-family: Verdana,Arial,Helvetica,sans-serif;
 				font-size: x-large;
 				font-weight: 400;
-				color: #000;
+				color: var(--theme-text);
 			}
 			a {
-				color: #00E;
+				color: var(--theme-links);
 			}
 			.footerNav {
 				overflow: hidden;
@@ -273,7 +301,7 @@
 				font-family: Verdana,Arial,Helvetica,sans-serif;
 			}
 			.navOptions {
-				color: #000;
+				color: var(--theme-text);
 			}
 			.footerNav ul li {
 				float: left;
@@ -288,7 +316,7 @@
 				max-width: 100%;
 				margin: 0 0 30px 0;
 				border: 1px dashed grey;
-				background: #EEE;
+				background: var(--theme-log-bg);
 				padding: 1px;
 				text-align: center;
 				align-self: center;
@@ -298,7 +326,7 @@
 				-webkit-appearance: button;
 				-webkit-writing-mode: horizontal-tb !important;
 				text-rendering: auto;
-				color: #000;
+				color: var(--theme-text);
 				letter-spacing: normal;
 				word-spacing: normal;
 				text-transform: none;
@@ -335,7 +363,7 @@
 			}
 			.logContent {
 				margin: 0;
-				color: #000;
+				color: var(--theme-text);
 				padding: 15px 5%;
 				text-align: left;
 				position: inherit;
@@ -350,8 +378,8 @@
 				box-sizing: border-box;
 				margin: 0 0 30px 0;
 				text-align: left;
-				border: 3px solid #c6c6c6;
-				background: white;
+				border: 3px solid var(--theme-authorlog-border);
+				background: var(--theme-authorlog-bg);
 			}
 			.creditWrapper {
 				width: -moz-min-content;
@@ -360,22 +388,22 @@
 				max-width: 600px;
 				margin: 0 auto 30px;
 				padding: 2px;
-				background-color: #ff9000;
-				border: 2px solid #ff9000;
+				background-color: var(--theme-credit-border-2);
+				border: 2px solid var(--theme-credit-border-2);
 				transition: opacity 1s;
 			}
 			.frame {
 				display: flex;
 				text-decoration: none;
-				color: #fff;
+				color: var(--theme-credit-text);
 			}
 			a.frame {
-				color: #fff!important;
+				color: var(--theme-credit-text) !important;
 			}
 			.icon {
 				font-size: 14px;
-				background: #000;
-				border: 2px solid #ff0;
+				background: var(--theme-credit-bg);
+				border: 2px solid var(--theme-credit-border-1);
 				margin-right: 4px;
 				padding: 4px;
 				line-height: 0;
@@ -387,9 +415,9 @@
 				white-space: nowrap;
 				width: 100%;
 				padding: 0 5px;
-				background: #000;
-				border: 2px solid #ff0;
-				box-shadow: 0 0 0 2px #ff9000;
+				background: var(--theme-credit-bg);
+				border: 2px solid var(--theme-credit-border-1);
+				box-shadow: 0 0 0 2px var(--theme-credit-border-2);
 			}
 			.credit .marquee {
 				display: inline-block;

@@ -3,6 +3,7 @@ const predefinedStyles = {
 	'BB': '#008800',
 	'CC': {color: '#CC8800', fontFamily: 'Times New Roman'},
 };
+
 const pages = [
 	{
 		title: 'Title.',
@@ -33,9 +34,13 @@ const pages = [
 		],
 	},
 	{
+		themeChange: 'myTheme',
 		title: '==>',
 		panelCount: 2, // Sets the number of panels on a page while still using default filenames.
 		content: [
+			{
+				text: "Set themeChange to change the theme to any predefined theme you set yourself.",
+			},
 			{
 				type: 'authorlog',
 				text:
@@ -68,6 +73,7 @@ const pages = [
 		],
 	},
 	{
+		themeChange: 'default',
 		title: '[S] ==>',
 		soundPage: '00005.mp4',
 		noNextButton: true,
@@ -104,6 +110,36 @@ const pages = [
 	},
 ];
 
+const themes = {
+	default: {
+		bg1: '#535353',
+		bg2: '#C6C6C6',
+		bg3: '#EEE',
+		logBg: '#EEE',
+		text: '#000',
+		links: '#00E',
+		authorlogBorder: '#C6C6C6',
+		authorlogBg: '#FFF',
+		creditBg: '#000',
+		creditBorder1: '#FF0',
+		creditBorder2: '#FF9000',
+		creditText: '#FFF',
+	},
+	myTheme: {
+		bg1: '#50B369',
+		bg2: '#8AC40B',
+		bg3: '#FFD760',
+		logBg: '#FFF',
+		text: '#000',
+		links: '#E3006A',
+		authorlogBorder: '#C6C6C6',
+		authorlogBg: '#FFF',
+		creditBg: '#000',
+		creditBorder1: '#FF0',
+		creditBorder2: '#FF9000',
+		creditText: '#FFF',
+	},
+};
 
 
 
@@ -140,5 +176,7 @@ function htmlEscape(str) {
 // Helper functions used in page markup utilities
 
 function camelCaseToKebabCase(str) {
-	return str.replaceAll(/([A-Z])/g, function(match) { return '-' + match.toLowerCase(); });
+	return str
+		.replaceAll(/([A-Z])/g, function(match) { return '-' + match.toLowerCase(); })
+		.replaceAll(/([0-9])/g, function(match) { return '-' + match; });
 }
