@@ -65,22 +65,12 @@ const pages = [
 			{
 				type: 'panel',
 			},
-			{
-				text: "Password boxes take you to a page upon entering. passwords for this box are \"password1\" and \"1234\".",
-			},
-			{
-				type: 'password',
-				text: color('BB', "Enter Password:"),
-				passwordPages: {
-					'password1': 2,
-					'1234': 1,
-				},
-			},
 		],
 	},
 	{
 		title: '[S] ==>',
 		soundPage: '00005.mp4',
+		noNextButton: true,
 		content: [
 			{
 				type: 'credit',
@@ -89,6 +79,26 @@ const pages = [
 			},
 			{
 				text: "This is just for an example on how to set up sound pages. No video displays here because no video file at this location is included.",
+			},
+			{
+				text: "Password boxes take you to a page upon entering. passwords for this box are \"password1\" and \"1234\".",
+			},
+			{
+				type: 'password',
+				text: color('BB', "Enter Password:"),
+				passwordPages: {
+					'password1': 2,
+					'1234': 6,
+				},
+			},
+		],
+	},
+	{
+		title: 'Secret Page!',
+		panelCount: 0,
+		content: [
+			{
+				text: 'This is the SECRET PAGE!<br><br>The page with the passwordbox had its next button hidden.',
 			},
 		],
 	},
