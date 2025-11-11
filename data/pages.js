@@ -65,6 +65,17 @@ const pages = [
 			{
 				type: 'panel',
 			},
+			{
+				text: "Password boxes take you to a page upon entering. passwords for this box are \"password1\" and \"1234\".",
+			},
+			{
+				type: 'password',
+				text: color('BB', "Enter Password:"),
+				passwordPages: {
+					'password1': 2,
+					'1234': 1,
+				},
+			},
 		],
 	},
 	{
