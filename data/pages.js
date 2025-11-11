@@ -6,6 +6,7 @@ const predefinedStyles = {
 const pages = [
 	{
 		title: 'Title.',
+		altText: 'Black text on a white background that says "00001.gif"',
 		// No panel image specified, defaults to #####.gif where the #s stand in for the page number.
 		content: [
 			{
@@ -53,6 +54,10 @@ const pages = [
 	{
 		title: '==>',
 		panels: ['00004_1.png', '00004_2.png'], // Overrides the default panel filenames for pages with multiple panels.
+		altText: [
+			'Black text on a white background that says "00004_1.png"',
+			'Black text on a white background that says "00004_2.png"',
+		],
 		content: [
 			{
 				text: `Use type ${ specificColor('#AA0000', 'panel') } to move a panel into the middle of text.`,

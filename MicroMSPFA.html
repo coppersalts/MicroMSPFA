@@ -69,8 +69,17 @@
 						panelFilenames = panelsList;
 					}
 					midPanelsCount = Math.min(midPanelsCount, panelFilenames.length);
+
+					let panelAltText = [];
+					if (pages[currentPage].altText != null) {
+						if (typeof pages[currentPage].altText === 'string') {
+							panelAltText = [pages[currentPage].altText];
+						} else {
+							panelAltText = pages[currentPage].altText;
+						}
+					}
 					for (let i = 0; i < panelFilenames.length; i++) {
-						panelsHTML[i] = `<img src="data/images/panels/${ panelFilenames[i] }" class=panel>`;
+						panelsHTML[i] = `<img src="data/images/panels/${ panelFilenames[i] }" ${ panelAltText[i] ? 'alt="' + htmlEscape(panelAltText[i]) + '"' : '' } class=panel>`;
 					}
 					document.querySelector('.mediaContent .media').innerHTML = panelsHTML.slice(0, panelFilenames.length - midPanelsCount).join('');
 				}
@@ -124,7 +133,7 @@
 			}
 
 			function stringEscape(str) {
-				return str.replaceAll("'", "\\'");
+				return str.replaceAll('\\', '\\\\').replaceAll('"', '\\"').replaceAll("'", "\\'");
 			}
 		</script>
 		<style>
