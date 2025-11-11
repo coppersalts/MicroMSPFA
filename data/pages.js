@@ -41,6 +41,13 @@ const pages = [
 					`Authorlogs can be added using the ${ specificColor('#AA0000', 'authorlog') } type.` + '<br>' +
 				'',
 			},
+			{
+				type: 'log',
+				logType: 'Anythinglog', // If left off, defaults to "Pesterlog".
+				hideText: 'Custom hide text!!!',
+				showText: 'Custom show text!',
+				text: 'For normal logs, set hideText and showText for custom hide and show text.',
+			},
 		],
 	},
 	{
